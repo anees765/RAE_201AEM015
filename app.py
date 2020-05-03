@@ -1,7 +1,10 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
+from flask_jwt import JWT, jwt_required
+from security import authenticate, identity
 
 app = Flask(__name__)
+app.secret_key = 'Anees'
 api = Api(app)
 
 items = []
@@ -12,6 +15,7 @@ class Item(Resource):
             if item['name'] == name:
                 return item
         return {'item': None}, 404
+    
 
     def post(self, name):
             data = request.get_json()
